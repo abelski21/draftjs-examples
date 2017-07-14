@@ -5,6 +5,7 @@ import RichQuill from '../components/RichEditorQuill';
 import RichTextEditor from '../components/ReactRTE';
 import DraftJSPluginsEditor from '../components/DraftJSPluginsEditor.js';
 import EditorMentions from '../components/MentionsEditor';
+import PluginSamples from '../components/PluginSample';
 
 class Examples extends Component {
   render() {
@@ -20,13 +21,13 @@ class Examples extends Component {
           <Panel title="React Quill Editor" features="React Quill text editor">
               <RichQuill />
           </Panel>
-          <Panel title="https://react-rte.org/demo" source="https://react-rte.org/demo" features="Rich Text Buttons">
-             {/* <iframe src="https://react-rte.org/demo"  style={{display: 'block', width: '100%', height: 500}} frameBorder="0"/>*/}
+          {/*<Panel title="https://react-rte.org/demo" source="https://react-rte.org/demo" features="Rich Text Buttons">
+             <iframe src="https://react-rte.org/demo"  style={{display: 'block', width: '100%', height: 500}} frameBorder="0"/>
              <RichTextEditor />
-          </Panel>
-          <Panel title="DraftJS-Plugins Editor" source="https://www.draft-js-plugins.com/" features="1. @mention w/ menu 2. Stickers! 3. colorful links 4. Hashtags 5. Undo/Redo">
+          </Panel>*/}
+          {/*<Panel title="DraftJS-Plugins Editor" source="https://www.draft-js-plugins.com/" features="1. @mention w/ menu 2. Stickers! 3. colorful links 4. Hashtags 5. Undo/Redo">
             <DraftJSPluginsEditor />
-          </Panel>
+          </Panel>*/}
         </div>
       </div>
     );
