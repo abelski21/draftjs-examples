@@ -1,4 +1,6 @@
+const debug = process.env.NODE_ENV !== "production";
 module.exports = {
+  devtool: debug ? "inline-sourcemap" : false,
   entry: [
     './public/src/index.js'
   ],

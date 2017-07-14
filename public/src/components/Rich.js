@@ -1,18 +1,36 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import {Editor, EditorState, RichUtils} from 'draft-js';
+import {Editor, EditorState, RichUtils, convertToRaw} from 'draft-js';
+import {stateToHTML} from 'draft-js-export-html'; //https://github.com/sstur/draft-js-export-html
+
+import '../../style/draft-js-plugin.css';
+import '../../style/editorStyles.css';
+
 
 class RichEditorExample extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {editorState: EditorState.createEmpty()};
+    this.state = {
+      editorState: EditorState.createEmpty(),
+      editorHTML: ''
+    };
+
 
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => this.setState({editorState});
+    this.onChange = this.onChange.bind(this);
 
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);
     this.toggleBlockType = (type) => this._toggleBlockType(type);
     this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
+   // this.onSearchChange = (value) => this.onSearchChange.bind(this);
+  }
+
+  onChange(editorState) {
+    this.setState({editorState: editorState});
+  }
+
+  convertEditorState(contentState) {
+    this.setState({editorHTML: stateToHTML(contentState)});
+    console.log(stateToHTML(contentState));
   }
 
   _handleKeyCommand(command) {
@@ -44,7 +62,12 @@ class RichEditorExample extends React.Component {
   }
 
   render() {
-    const {editorState} = this.state;
+    const {editorState, editorHTML, suggestions} = this.state;
+    const style = {
+      border: 'solid 1px',
+      padding: '5px',
+      marginTop: '10px'
+    };
 
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
@@ -66,18 +89,22 @@ class RichEditorExample extends React.Component {
           editorState={editorState}
           onToggle={this.toggleInlineStyle}
         />
-        <div className={className} onClick={this.focus}>
+        <div className={className}
+             onClick={this.focus}>
           <Editor
             blockStyleFn={getBlockStyle}
             customStyleMap={styleMap}
             editorState={editorState}
             handleKeyCommand={this.handleKeyCommand}
             onChange={this.onChange}
-            placeholder="Tell a story..."
             ref="editor"
             spellCheck={true}
           />
         </div>
+        <button onClick={this.convertEditorState.bind(this, contentState)}>
+          Convert to HTML
+        </button>
+        <div style={style}>{editorHTML}</div>
       </div>
     );
   }
